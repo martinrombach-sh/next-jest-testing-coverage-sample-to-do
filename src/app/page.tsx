@@ -1,5 +1,5 @@
-"use client";
-import React, { useEffect, useState } from "react";
+"use client"
+import React, { useEffect, useState } from "react"
 import {
   AppBar,
   Toolbar,
@@ -18,16 +18,17 @@ import {
   ListItemButton,
   ListItemText,
   Drawer,
-} from "@mui/material";
-import "./page.css";
+} from "@mui/material"
+import "./page.css"
 import {
   Brightness4,
   Brightness7,
   Close as CloseIcon,
   Menu as MenuIcon,
-} from "@mui/icons-material";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+} from "@mui/icons-material"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { toggleDarkMode } from "./helpers/helpers"
 
 const darkGreenTheme = createTheme({
   palette: {
@@ -45,57 +46,56 @@ const darkGreenTheme = createTheme({
   typography: {
     fontFamily: "Poppins, sans-serif",
   },
-});
+})
 
 export default function LandingPage() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [animationClass, setAnimationClass] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [animationClass, setAnimationClass] = useState("")
   const [user, setUser] = useState<{ id: number; username: string } | null>(
-    null,
-  );
-  const router = useRouter();
-  const pathname = usePathname();
-  const isActive = (path: string) => pathname === path;
+    null
+  )
+  const router = useRouter()
+  const pathname = usePathname()
+  const isActive = (path: string) => pathname === path
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    localStorage.setItem("darkMode", JSON.stringify(!isDarkMode));
-  };
+  /* const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode)
+    localStorage.setItem("darkMode", JSON.stringify(!isDarkMode))
+  }
+    */
 
   const logout = () => {
-    localStorage.removeItem("currentUser");
-    setUser(null);
-    router.push("/auth/login");
-  };
+    localStorage.removeItem("currentUser")
+    setUser(null)
+    router.push("/auth/login")
+  }
 
   useEffect(() => {
-    const storedUser = JSON.parse(
-      localStorage.getItem("currentUser") || "null",
-    );
+    const storedUser = JSON.parse(localStorage.getItem("currentUser") || "null")
     if (storedUser) {
-      setUser(storedUser);
+      setUser(storedUser)
     }
-  }, [router]);
+  }, [router])
 
   useEffect(() => {
     const prefersDarkMode = JSON.parse(
-      localStorage.getItem("darkMode") || "true",
-    );
-    setIsDarkMode(prefersDarkMode);
+      localStorage.getItem("darkMode") || "true"
+    )
+    setIsDarkMode(prefersDarkMode)
 
     // Add the animation class after component mounts
     const timer = setTimeout(() => {
-      setAnimationClass("animated");
-    }, 100); // Small delay for the effect
+      setAnimationClass("animated")
+    }, 100) // Small delay for the effect
 
-    return () => clearTimeout(timer);
-  }, []);
+    return () => clearTimeout(timer)
+  }, [])
 
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
-  };
+    setMobileOpen(!mobileOpen)
+  }
 
   const drawer = (
     <Box
@@ -141,8 +141,8 @@ export default function LandingPage() {
           >
             <ListItemButton
               onClick={() => {
-                logout();
-                handleDrawerToggle();
+                logout()
+                handleDrawerToggle()
               }}
             >
               <ListItemText primary="Logout" sx={{ color: "red" }} />
@@ -207,7 +207,9 @@ export default function LandingPage() {
             <Typography sx={{ color: isDarkMode ? "#fff" : "#000" }}>
               Dark Mode
             </Typography>
-            <IconButton onClick={toggleDarkMode}>
+            <IconButton
+              onClick={() => toggleDarkMode(isDarkMode, setIsDarkMode)}
+            >
               {isDarkMode ? (
                 <Brightness7 sx={{ color: "#fff" }} />
               ) : (
@@ -218,7 +220,7 @@ export default function LandingPage() {
         </ListItem>
       </List>
     </Box>
-  );
+  )
 
   return (
     <ThemeProvider theme={darkGreenTheme}>
@@ -355,7 +357,10 @@ export default function LandingPage() {
                 </Button>
               </Link>
 
-              <IconButton color="inherit" onClick={toggleDarkMode}>
+              <IconButton
+                color="inherit"
+                onClick={() => toggleDarkMode(isDarkMode, setIsDarkMode)}
+              >
                 {isDarkMode ? <Brightness7 /> : <Brightness4 />}
               </IconButton>
             </Box>
@@ -621,13 +626,16 @@ export default function LandingPage() {
           }}
         >
           <Typography variant="h5" gutterBottom>
-              Explore the App&apos;s Documentation
+            Explore the App&apos;s Documentation
           </Typography>
           <Typography variant="body2" gutterBottom>
             Visit the app&apos;s source code repository and view the API
             documentation to get to know the app even better!
           </Typography>
-          <Link href="https://github.com/hoangsonww/ToDo-App-NextJS-Fullstack" passHref>
+          <Link
+            href="https://github.com/hoangsonww/ToDo-App-NextJS-Fullstack"
+            passHref
+          >
             <Button
               variant="contained"
               sx={{
@@ -661,5 +669,5 @@ export default function LandingPage() {
         </Box>
       </div>
     </ThemeProvider>
-  );
+  )
 }
