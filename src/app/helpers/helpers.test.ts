@@ -1,6 +1,7 @@
 import { expect, jest, test } from "@jest/globals"
 import React, { useEffect, useState } from "react"
 import { toggleDarkMode } from "./helpers"
+
 test("Typescript Sanity check", () => {
   const one: number = 1
   expect(one).toBe(1)
@@ -27,14 +28,8 @@ jsx
 
 //toggle dark mode test suite
 describe("toggleDarkMode", () => {
-  //
+  //local storage only accepts strings in a key value pair structure
+  //so a record is an accurate representation
+  let mockStorage: Record<string, string> = {}
   const [mockIsDarkMode, setMockIsDarkMode] = useState(false)
-
-  //jest is expecting more properties for mocking global storage
-  /*
-  beforeEach(() => {
-    // Storage Mock for local storage
-    // State Mock
-  })
-  */
 })
